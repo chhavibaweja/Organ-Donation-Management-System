@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Organ Donation Management System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">OrganLife</div>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/donor-login">Donor</a></li>
+        <li><a href="/recipient-login">Recipient</a></li>
+        <li><a href="/admin_login">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Organ Donation Management System</h1>
+    <p>Connecting Donors, Recipients, and Administrators for a Better Tomorrow!</p>
+
+    <div class="stats">
+      <div class="stat-box">
+        <h3>{{ donors|length }}</h3>
+        <p>Total Donors</p>
+      </div>
+      <div class="stat-box">
+        <h3>{{ recipients|length }}</h3>
+        <p>Total Recipients</p>
+      </div>
+    </div>
+  </section>
+
+<!-- Module Cards -->
+  <section class="cards-section">
+    <div class="card">
+      <h2>🩸 Donor Module</h2>
+      <p>Register as a donor by submitting your personal and medical details securely.</p>
+      <a href="{{ url_for('donor_register') }}" class="btn">Register Now</a>
+    </div>
+
+    <div class="card">
+      <h2>💚 Recipient Module</h2>
+      <p>Search for matching donors based on organ type, blood group, and location.</p>
+      <a href="{{ url_for('recipient_login') }}" class="btn">Find Donor</a>
+    </div>
+
+    <div class="card">
+      <h2>🧑‍💻 Admin Module</h2>
+      <p>Verify and manage donor and recipient records for authenticity and accuracy.</p>
+      <a href="{{ url_for('admin_login') }}" class="btn">Go to Dashboard</a>
+    </div>
+  </section>
+
+  <section class="lists">
+    <div class="table-container">
+      <h2>Recent Donors</h2>
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Name</th><th>Blood</th><th>Organ</th><th>City</th></tr>
+        </thead>
+        <tbody>
+          {% for d in donors %}
+          <tr>
+            <td>{{ d.id }}</td>
+            <td>{{ d.name }}</td>
+            <td>{{ d.blood_group }}</td>
+            <td>{{ d.organ }}</td>
+            <td>{{ d.city }}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="6">No donors yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-container">
+      <h2>Recent Recipients</h2>
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Name</th><th>Blood</th><th>Organ Needed</th><th>City</th></tr>
+        </thead>
+        <tbody>
+          {% for r in recipients %}
+          <tr>
+            <td>{{ r.id }}</td>
+            <td>{{ r.name }}</td>
+            <td>{{ r.blood_group }}</td>
+            <td>{{ r.organ_needed }}</td>
+            <td>{{ r.city }}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="6">No recipients yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 OrganLife | All Rights Reserved</p>
+  </footer>
+</body>
+</html>
