@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    * { margin: 10px; padding: 0;}
+    h1 { font-size: 40px; color: black; text-align: center; margin-top: 10px; }
+    a { display: flex; text-decoration: none; justify-content: right; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+    th { background-color: #ffb6c1; }
+    .stats-box { display: flex; justify-content: space-around; margin: 20px 0; }
+    .card { background: #f9e0ec; padding: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+    .logout-btn { background: #d9534f; color: white; padding: 10px 20px; border: none; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h1>Admin Dashboard</h1>
+  <a href="/admin_logout"><button class="logout-btn">Logout</button></a>
+
+  <a href="/admin_requests">View Approval Requests</a>
+
+  <div class="stats-box">
+    <div class="card">Total Donors: {{ stats.total_donors }}</div>
+    <div class="card">Total Recipients: {{ stats.total_recipients }}</div>
+    <div class="card">Total Matches: {{ stats.total_matches }}</div>
+  </div>
+
+  <h2>Donors</h2>
+  <table>
+    <thead><tr><th>Name</th><th>Blood</th><th>Organ</th><th>City</th><th>Contact</th><th>Delete</th></tr></thead>
+    <tbody>
+      {% for d in donors %}
+      <tr>
+        <td>{{ d.name }}</td>
+        <td>{{ d.blood_group }}</td>
+        <td>{{ d.organ }}</td>
+        <td>{{ d.city }}</td>
+        <td>{{ d.contact }}</td>
+        <td><a href="/delete-donor/{{ d.id }}" onclick="return confirm('Delete donor?')">Delete</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Recipients</h2>
+  <table>
+    <thead><tr><th>Name</th><th>Blood</th><th>Organ Needed</th><th>City</th><th>Contact</th><th>Delete</th></tr></thead>
+    <tbody>
+      {% for r in recipients %}
+      <tr>
+        <td>{{ r.name }}</td>
+        <td>{{ r.blood_group }}</td>
+        <td>{{ r.organ_needed }}</td>
+        <td>{{ r.city }}</td>
+        <td>{{ r.contact }}</td>
+        <td><a href="/delete-recipient/{{ r.id }}" onclick="return confirm('Delete recipient?')">Delete</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Matched Donors & Recipients</h2>
+  <table>
+    <thead><tr><th>Recipient Name</th><th>Organ Needed</th><th>Blood</th><th>Donor Name</th><th>City</th></tr></thead>
+    <tbody>
+      {% for match in matches %}
+      <tr>
+        <td>{{ match.recipient.name }}</td>
+        <td>{{ match.recipient.organ_needed }}</td>
+        <td>{{ match.recipient.blood_group }}</td>
+        <td>{{ match.donor.name }}</td>
+        <td>{{ match.donor.city }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

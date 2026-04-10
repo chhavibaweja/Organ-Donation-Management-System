@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates', static_folder='static')
 app.secret_key = "supersecretkey"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///organ_donation.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
